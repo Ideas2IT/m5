@@ -11,43 +11,46 @@ module ApplicationHelper
   ## Menu helpers
   
   def menu
-    home     = menu_element("Dashboard",   home_path)
-    people   = menu_element("People", people_path)
-    if Forum.count == 1
-      forum = menu_element("Forum", forum_path(Forum.find(:first)))
-    else
-      forum = menu_element("Forums", forums_path)
-    end
-    resources = menu_element("Resources", "http://docs.insoshi.com/")
+    home     = menu_element("Home",   home_path)
+    rss = menu_element("RSS", rss_url(@slug))
+    post_ad = menu_element("Post Ad",:controller => 'ads', :action => 'post')
+    links = [home, post_ad, rss]
+#    people   = menu_element("People", people_path)
+#    if Forum.count == 1
+#      forum = menu_element("Forum", forum_path(Forum.find(:first)))
+#    else
+#      forum = menu_element("Forums", forums_path)
+#    end
+#    resources = menu_element("Resources", "http://docs.insoshi.com/")
 
-    if logged_in? and not admin_view?
-      profile  = menu_element("Profile",  person_path(current_person))
-      messages = menu_element("Messages", messages_path)
+#    if logged_in? and not admin_view?
+#      profile  = menu_element("Profile",  person_path(current_person))
+#      messages = menu_element("Messages", messages_path)
       #blog     = menu_element("Blog",     blog_path(current_person.blog))
       #photos   = menu_element("Photos",   photos_path)
       #contacts = menu_element("Contacts",
       #                        person_connections_path(current_person))
-      events   = menu_element("Events", events_path)
+#      events   = menu_element("Events", events_path)
       #links = [home, profile, contacts, messages, blog, people, forum]
-      links = [home, profile, messages, people, forum]
+#      links = [home, profile, messages, people, forum]
       # TODO: put this in once events are ready.
       # links.push(events)
       
-    elsif logged_in? and admin_view?
-      home =    menu_element("Home", home_path)
-      people =  menu_element("People", admin_people_path)
-      forums =  menu_element(inflect("Forum", Forum.count),
-                             admin_forums_path)
-      preferences = menu_element("Prefs", admin_preferences_path)
-      links = [home, people, forums, preferences]
-    else
-      links = [home, people]
-    end
-    if global_prefs.about.blank?
-      links
-    else
-      links.push(menu_element("About", about_url))
-    end
+#    elsif logged_in? and admin_view?
+#      home =    menu_element("Home", home_path)
+#      people =  menu_element("People", admin_people_path)
+#      forums =  menu_element(inflect("Forum", Forum.count),
+#                             admin_forums_path)
+#      preferences = menu_element("Prefs", admin_preferences_path)
+#      links = [home, people, forums, preferences]
+#    else
+#      links = [home, people]
+#    end
+#    if global_prefs.about.blank?
+#      links
+#    else
+#      links.push(menu_element("About", about_url))
+#    end
   end
 
   def menu_element(content, address)
@@ -189,5 +192,13 @@ module ApplicationHelper
     # Return true if the text *doesn't* start with a paragraph tag.
     def no_paragraph_tag?(text)
       text !~ /^\<p/
+    end
+
+    def rss_url(slug)
+ 	if slug
+	  return '/' + slug + '/feed' 
+	else       
+	  return '/feed' 
+        end
     end
 end

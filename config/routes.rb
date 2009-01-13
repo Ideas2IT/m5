@@ -62,6 +62,14 @@ ActionController::Routing::Routes.draw do |map|
   map.about '/about', :controller => 'home', :action => 'about'
   map.admin_home '/admin/home', :controller => 'home'
 
+  # maps route to rss/atom feed
+  map.connect 'feed', :controller => 'ads', :action => 'feed'
+
+  # maps a route of http://cars.com/hyundai/ to list all ads with the category slug 'hyundai'
+  map.connect ':slug', :controller => 'ads', :action => 'list'
+  
+  map.connect ':slug/feed', :controller => 'ads', :action => 'category_feed'  
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

@@ -1,38 +1,28 @@
-<%- column_div :type => :primary do -%>
-  <%- if logged_in? and current_person.has_unread_messages? -%>
-    <div class="notice">
-      You have unread messages in your mailbox.
-      <%= link_to "Click here to see your messages",
-                  messages_path %>
-    </div>
-  <%- end -%>
-  <%= render :partial => 'feed' %>
-<%- end -%>
+<br />
+<!-- Use Standard Nesting Grids and Special Nesting Grids to subdivid regions of your layout. -->
+<!-- Special Nesting Grid B tells three children to split space evenly -->
+<!-- the first child of a Grid needs the "first" class -->
+<% if !@parent_categories.blank? %>
+	<% @cats = 0 %>
+	<% # max categories to list on a single line %>
+	<% @maxcats = 25 %>
+	<div class="yui-u first">
+	<% for p in @parent_categories %>
+		<ul class="ads">
+	        <div class ="ads_category">
+	            <%= render :partial => 'category', :locals => { :category => p } %>
+	        </div>
+	        <div class ="ads">    
+	        <%= render :partial => 'category', :collection => p.categories.find(:all, :order => 'name ASC') %>
+	        </div>
+		</ul>
+		<% @cats += p.categories.size %>
+		<% if @cats >= @maxcats %>
+			</div>
+			<div class="yui-u">
+			<% @cats = 0 %>
+		<% end %>
+	<% end %>
+	</div>
+<% end %>
 
-<%- column_div :type => :secondary do -%>
-  <%= render :partial => "searches/box" %>
-  <%- if logged_in? -%>
-    <%= render :partial => 'requested_contacts' %>
-    <%= render :partial => 'messages_preview' %>
-    <%= render :partial => 'shared/contacts_preview',
-               :locals => { :person => current_person } %>
-  <%- else -%>
-    <%- unless global_prefs.app_name.blank? -%>
-      <h2>About <%= global_prefs.app_name %></h2>
-    
-      <p>
-        <%= link_to "Click here", about_path %>
-        to learn more about us.
-      </p>
-    <%- end -%>
-    
-    <h2>Join
-      <%= global_prefs.app_name.blank? ? "the site" : global_prefs.app_name %>
-    </h2>
-    
-    <div style="text-align: center;">
-      <%= link_to image_tag("button_signup.png"), signup_path %>
-    </div>
-      
-  <%- end -%>
-<%- end -%>

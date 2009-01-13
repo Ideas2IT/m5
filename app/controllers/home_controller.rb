@@ -1,20 +1,20 @@
 class HomeController < ApplicationController
   skip_before_filter :require_activation
+  before_filter :set_up
   
   def index
     @body = "home"
-    @topics = Topic.find_recent
-    @members = Person.find_recent
-    if logged_in?
-      @feed = current_person.feed
-      @some_contacts = current_person.some_contacts
-      @requested_contacts = current_person.requested_contacts
-    else
-      @feed = Activity.global_feed
-    end    
+    @parent_categories = ParentCategory.find :all, :order => 'name ASC'
+    @cars = Car.find :all
     respond_to do |format|
       format.html
       format.atom
     end  
   end
+
+  def set_up
+    ParentCategory.set_defaults
+    Category.set_defaults
+  end
+    
 end
