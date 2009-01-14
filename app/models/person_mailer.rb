@@ -62,6 +62,14 @@ class PersonMailer < ActionMailer::Base
     body         "server_name" => server,
                  "code" => ev.code
   end
+
+   # this e-mail gets send for confirmation before the ad is activated
+   def confirmation_email(ad, author)
+    recipients author
+    from       "ChucksList <postman@chuckslist.org>"
+    subject    "Your Ad Activation"
+    body       :ad => ad
+  end
   
   private
   
