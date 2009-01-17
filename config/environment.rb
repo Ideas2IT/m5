@@ -85,6 +85,9 @@ require 'vendor/plugins/jquery_ui_rails_helpers/helpers/tabs_renderer'
 # The directory /tmp/ruby.[USER] is used instead
 ENV['INLINEDIR']="/tmp/ruby.#{ENV['USER']}" unless ENV['OS'] =~ /Windows/
 
+# Global var
+$generatedKeyCount = 1
+
 # For the sake of rawk profiling.
 # Rails > 2.0 uses BufferedLogger, not Logger as in Rails 1.2.
 module ActiveSupport

@@ -91,7 +91,7 @@ class AdsController < ApplicationController
       @ad.handle_images(params[:image_attachments])     
 
       # send confirmation email with activation url
-      Mailman.deliver_confirmation_email(@ad, @author.email)
+      PersonMailer.deliver_confirmation_email(@ad, @author.email)
       flash[:notice] = 'A Confirmation Email Has Been Sent To ' + @author.email
       
     end

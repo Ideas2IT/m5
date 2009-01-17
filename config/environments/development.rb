@@ -17,3 +17,15 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 
 config.active_record.colorize_logging = true
+
+########### CHUCKSLIST CONFIGURATION VALUES #############
+
+DOMAIN = 'localhost:3000'
+SITE_NAME = 'ChucksList'
+# be sure to include the trailing slash '/' here
+SITE_URL = 'http://localhost:3000/'
+JUNK_MAIL = 'garbage@chuckslist.org'
+
+
+# choose :smtp, :sendmail, :test
+config.action_mailer.delivery_method = :test
