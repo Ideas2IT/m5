@@ -17,3 +17,12 @@ class AddFieldsToAds < ActiveRecord::Migration
       remove_column :ads, :running_km
   end  
 end
+
+
+
+
+
+
+
+
+
