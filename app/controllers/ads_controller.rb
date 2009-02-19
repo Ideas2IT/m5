@@ -1,6 +1,6 @@
 class AdsController < ApplicationController
+ 
   
-
   # show one particular ad
   def show
     @ad = Ad.find_by_id(params[:id])
@@ -40,6 +40,14 @@ class AdsController < ApplicationController
       flash[:warning] = 'Invalid Request'
       redirect_to root_path
     end
+  end
+  
+  # show a list of ads in all category  
+  def list_all(page =1)
+    @ads = Ad.paginate(:all,
+                            :page => params[:page],
+                            :order => 'created_at desc',
+                            :per_page => 20)
   end
   
   
@@ -205,7 +213,24 @@ class AdsController < ApplicationController
       format.atom # index.atom.builder
     end
   end
+  
+  def search 
+    @page = 1
+    if !params[:page].nil? 
+      @page = params[:page]        
+    end
 
+    
+    @search = Ultrasphinx::Search.new(
+      :query => params[:query],
+      :sort_mode => 'descending',
+      :sort_by => 'created_at',
+      :page => @page
+    )
+    @search.run
+    @search.results
+    puts @search.size
+  end
   
 end
 

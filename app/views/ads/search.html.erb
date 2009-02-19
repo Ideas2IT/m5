@@ -1,0 +1,14 @@
+<br/>
+<%=form_tag (:url=>{:controller => "ads",:action => "search"}) %>
+<%= text_field_tag :query %>
+
+
+<% if @search.size > 0 %>
+<ul>
+	<%= will_paginate @search %>
+	<%= render :partial => 'ad', :collection => @search %>
+	<%= will_paginate @search%>
+</ul>
+<% else %>
+	Sorry - there are no ads 
+<% end %>

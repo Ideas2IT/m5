@@ -6,6 +6,10 @@ class Ad < ActiveRecord::Base
   has_many :ad_images
   
   validate :expiration_is_set
+
+  # Indexed fields for Sphinx
+  is_indexed :fields => ['ad', 'title', 'car_make', 'car_model', 'car_color', 'running_km','price','manufacture_year','email' 'created_at']
+
   
   def handle_images(image_attachments)
     return unless image_attachments.respond_to? :each
@@ -98,11 +102,7 @@ protected
     if ($generatedKeyCount > 99999)
       $generatedKeyCount = 1
     end
- end
-
-
-  
-  
+ end  
   
 end
 
