@@ -85,11 +85,13 @@ def scrap_carwale_cars
       car_detail_hash['last_updated'] = element.elements['last_updated'].text
       car_detail_hash['profile_id'] = year_pfofile_text_array[0] + ":" +year_pfofile_text_array[1]
       
-      index = car_detail_hash['name'].index(" ")
-      make = name[0, index]
-      model = name[index + 1, name.length]
-      car_detail_hash['make'] = make
-      car_detail_hash['model'] = model
+      
+      #name = car_detail_hash['name']
+      #index = name.index(" ")
+      #make = name[0, index]
+      #model = name[index + 1, name.length]
+      #car_detail_hash['make'] = make
+      #car_detail_hash['model'] = model
       
       used_cars_array.push car_detail_hash
     end
