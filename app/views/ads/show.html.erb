@@ -7,7 +7,7 @@
 <h1>Running km: <%= @ad.running_km.to_s %></h>
 <h1>Price: <%= @ad.price.to_s %></h1>
 <h1>Reply to: <%= @ad.email.to_s %></h1>
-<h1>Posted Date: <%= @ad.created_at.to_s %></h1>
+<h1>Posted Date: <%= @ad.created_at.to_date %></h1>
 <br/>
 
 <p><%=h @ad.ad %></p>
